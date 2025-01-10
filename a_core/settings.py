@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
+    # 3rd party apps
+    "admin_honeypot",
+    # local apps
+    "pages",
 ]
 
 MIDDLEWARE = [
