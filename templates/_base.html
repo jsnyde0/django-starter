@@ -1,5 +1,5 @@
 {% load static %}
-{% comment %} {% load django_htmx %} {% endcomment %}
+{% load django_htmx %}
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
   <head>
@@ -17,10 +17,8 @@
     <link rel="icon"
           type="image/png"
           href="{% static 'img/logo.png' %}">
-    {% comment %} <script defer src="{% static 'js/htmx.min.js' %}"></script> {% endcomment %}
-
-
-    {% comment %} {% django_htmx_script %} {% endcomment %}
+    <script defer src="{% static 'js/htmx.min.js' %}"></script>
+    {% django_htmx_script %}
     <link rel="stylesheet"
           href="{% if debug %}{% static 'css/style.css' %}{% else %}{% static 'css/style.min.css' %}{% endif %}">
     {% block extra_head %}
@@ -40,7 +38,7 @@
         });
     </script> {% endcomment %}
     <!-- flowbite -->
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js" defer></script>
     {% block extra_js %}
     {% endblock extra_js %}
   </body>
