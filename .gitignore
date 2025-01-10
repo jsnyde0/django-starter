@@ -171,3 +171,10 @@ cython_debug/
 .pypirc
 
 .ruff_cache/
+
+# tailwind
+node_modules/
+
+# static and media files
+staticfiles/
+media/
