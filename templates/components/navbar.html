@@ -15,7 +15,11 @@
                     data-dropdown-placement="bottom">
                 <span class="sr-only">Open user menu</span>
                 <div class="w-8 rounded-full">
+                    {% if user.is_authenticated %}
                     <img src="{% static 'img/avatar.png' %}" alt="user photo">
+                    {% else %}
+                    <img src="{% static 'img/avatar-anonymous.png' %}" alt="user photo">
+                    {% endif %}
                 </div>
             </button>
             <!-- Dropdown menu -->
