@@ -28,9 +28,14 @@ Env.read_env(env_file=Path(__file__).resolve().parent.parent / ".env")
 SECRET_KEY = "django-insecure-i+$(!087rukhqt&24x!6_gn(cfai(ft30n&6&o51&acu%cgt)z"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG", default=False)
+if DEBUG:
+    INTERNAL_IPS = ["127.0.0.1"]
 
-ALLOWED_HOSTS = []
+print("DEBUG", DEBUG)
+print("type of DEBUG", type(DEBUG))
+
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 
 
 # Application definition
@@ -80,7 +85,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "django.template.context_processors.request",
             ],
         },
     },
