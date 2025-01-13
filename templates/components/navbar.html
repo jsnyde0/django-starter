@@ -20,6 +20,7 @@
             </button>
             <!-- Dropdown menu -->
             <div class="dropdown-content menu bg-base-200 w-56 rounded-box shadow-xl hidden" id="user-dropdown">
+                {% if user.is_authenticated %}
                 <div class="px-4 py-3">
                     <span class="block text-sm text-base-content">Bonnie Green</span>
                     <span class="block text-sm text-base-content/70 truncate">name@djangostarter.com</span>
@@ -29,8 +30,12 @@
                     <li><a class="text-base-content">Dashboard</a></li>
                     <li><a class="text-base-content">Settings</a></li>
                     <li><a class="text-base-content">Earnings</a></li>
-                    <li><a class="text-base-content">Sign out</a></li>
+                    <li><a class="text-base-content" href="{% url 'account_logout' %}">Sign out</a></li>
                 </ul>
+                {% else %}
+                <li><a class="text-base-content" href="{% url 'account_signup' %}">Register</a></li>
+                <li><a class="text-base-content" href="{% url 'account_login' %}">Sign in</a></li>
+                {% endif %}
             </div>
             <button data-collapse-toggle="navbar-user"
                     type="button"
