@@ -22,4 +22,5 @@ urlpatterns = [
     path("", include("pages.urls")),
     path("thebaws/", admin.site.urls),
     path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
+    path("accounts/", include("allauth.urls")),
 ]

@@ -86,3 +86,6 @@ Run local development server:
 ```bash
 uv run python manage.py runserver
 ```
+
+For email notifications to work, you need to set up an email account and add the credentials to the `.env` file. Also set the domain your app is running on in the django admin -> Sites -> Sites -> example.com.
+If you want to use Google's SMTP server, you need to create an app password for the account you want to use and add it to the `.env` file.
