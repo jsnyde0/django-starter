@@ -32,9 +32,6 @@ DEBUG = env.bool("DEBUG", default=False)
 if DEBUG:
     INTERNAL_IPS = ["127.0.0.1"]
 
-print("DEBUG", DEBUG)
-print("type of DEBUG", type(DEBUG))
-
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 
 
@@ -140,6 +137,24 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
+
+# email notifications
+EMAIL_HOST = env("EMAIL_HOST", default="")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
+print("EMAIL_HOST", EMAIL_HOST)
+print("EMAIL_HOST_USER", EMAIL_HOST_USER)
+print("EMAIL_HOST_PASSWORD", EMAIL_HOST_PASSWORD)
+if EMAIL_HOST and EMAIL_HOST_USER and EMAIL_HOST_PASSWORD:
+    print("using smtp")
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    DEFAULT_FROM_EMAIL = f"Awesome {EMAIL_HOST_USER}"
+    ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
+else:
+    print("using console")
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
