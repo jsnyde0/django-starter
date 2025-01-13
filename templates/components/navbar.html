@@ -26,8 +26,8 @@
             <div class="dropdown-content menu bg-base-200 w-56 rounded-box shadow-xl hidden" id="user-dropdown">
                 {% if user.is_authenticated %}
                 <div class="px-4 py-3">
-                    <span class="block text-sm text-base-content">Bonnie Green</span>
-                    <span class="block text-sm text-base-content/70 truncate">name@djangostarter.com</span>
+                    {% comment %} <span class="block text-sm text-base-content">Bonnie Green</span> {% endcomment %}
+                    <span class="block text-sm text-base-content/70 truncate">{{ user.email }}</span>
                 </div>
                 <div class="divider m-0"></div>
                 <ul class="menu menu-sm">
