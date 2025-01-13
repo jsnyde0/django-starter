@@ -1,0 +1,40 @@
+name: django-starter
+
+services:
+  app:
+    build: .
+    container_name: app-container
+    image: app-image
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgres://postgresjonatan:postgrespassword@db:5432/postgresproart?connect_timeout=5
+    ports:
+      - "8000:8000"
+    volumes:
+      - /app/.venv
+    command: ["./start.sh"]
+    # command: ["sh", "-c", "ls -la /app && cat /app/start.sh && ./start.sh"]
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres
+    container_name: db-container
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgresjonatan -d postgresproart"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment:
+      - POSTGRES_DB=postgresproart
+      - POSTGRES_USER=postgresjonatan
+      - POSTGRES_PASSWORD=postgrespassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
