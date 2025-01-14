@@ -1,5 +1,6 @@
 .venv
 .env
+.git
 .github
 .lock
 .md
@@ -12,8 +13,11 @@
 *.pyo
 *.pyd
 *.db
+*.egg-info/
 *.sqlite3
 *.log
 *.pid
-staticfiles
+build
+dist
 docker-compose.yml
+staticfiles
