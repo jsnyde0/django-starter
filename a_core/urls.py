@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -28,5 +29,7 @@ urlpatterns = [
 ]
 
 # Serve media files locally only if we're in DEBUG mode AND not using Cloudinary
+if settings.DEBUG:
+    urlpatterns += debug_toolbar_urls()
 if settings.DEBUG and not settings.USE_CLOUDINARY:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
