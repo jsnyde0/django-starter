@@ -34,11 +34,11 @@
                     <li><a class="text-base-content">Dashboard</a></li>
                     <li><a class="text-base-content">Settings</a></li>
                     <li><a class="text-base-content">Earnings</a></li>
-                    <li><a class="text-base-content" href="{% url 'account_logout' %}">Sign out</a></li>
+                    <li><a class="text-base-content" href="{% url 'account_logout' %}">Log out</a></li>
                 </ul>
                 {% else %}
                 <li><a class="text-base-content" href="{% url 'account_signup' %}">Register</a></li>
-                <li><a class="text-base-content" href="{% url 'account_login' %}">Sign in</a></li>
+                <li><a class="text-base-content" href="{% url 'account_login' %}">Log in</a></li>
                 {% endif %}
             </div>
             <button data-collapse-toggle="navbar-user"

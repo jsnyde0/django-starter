@@ -98,8 +98,6 @@ DATABASE_URL = env.str(
     "DATABASE_URL", default="postgres://postgres:postgres@postgres:5432/postgres"
 )
 DATABASES = {"default": dj_database_url.parse(DATABASE_URL)}
-print(f"DATABASE_URL = {DATABASE_URL}")
-print(f"DATABASES = {DATABASES}")
 
 
 # Password validation
