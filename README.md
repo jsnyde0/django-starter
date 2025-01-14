@@ -38,6 +38,15 @@ The development setup includes:
 - Automatic database migrations
 - Superuser creation (if specified in .env)
 
+Use `docker compose exec app` to run commands in the `app` container
+(which is the container running the django app), e.g.:
+```bash
+docker compose exec app python manage.py makemigrations
+docker compose exec app python manage.py migrate
+docker compose exec app python manage.py createsuperuser
+docker compose exec app python manage.py collectstatic --noinput
+```
+
 ## Frontend Development
 
 Run Tailwind in watch mode (in a separate terminal):
@@ -94,7 +103,7 @@ uv run ruff format --check .
 
 ## Running Without Docker
 
-If you prefer to run without Docker:
+If you prefer to run without Docker, you will need to set up a PostgreSQL database locally and update your `.env` file accordingly. Follow these steps:
 
 1. Set up a PostgreSQL database locally
 2. Run migrations:
