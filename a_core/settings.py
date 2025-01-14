@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     "admin_honeypot",
     "allauth",
     "allauth.account",
+    # "cloudinary_storage", # added conditionally
+    # "cloudinary", # added conditionally
     "django_htmx",
     "template_partials",
     # local apps
@@ -170,6 +172,27 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+MEDIA_URL = "media/"
+
+USE_CLOUDINARY = env.bool("USE_CLOUDINARY", default=False)
+if USE_CLOUDINARY:
+    INSTALLED_APPS += ["cloudinary_storage", "cloudinary"]
+
+    STORAGES = {
+        "default": {"BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage"},
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"
+        },  # noqa: E501
+    }
+
+    CLOUDINARY_STORAGE = {
+        "cloud_name": env("CLOUDINARY_CLOUD_NAME"),
+        "api_key": env("CLOUDINARY_API_KEY"),
+        "api_secret": env("CLOUDINARY_API_SECRET"),
+    }
+else:
+    MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
