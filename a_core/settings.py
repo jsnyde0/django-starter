@@ -31,7 +31,15 @@ SECRET_KEY = "django-insecure-i+$(!087rukhqt&24x!6_gn(cfai(ft30n&6&o51&acu%cgt)z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
 if DEBUG:
-    INTERNAL_IPS = ["127.0.0.1"]
+    import socket
+
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [
+        "127.0.0.1",
+        "10.0.2.2",  # Common Docker desktop bridge IP
+    ]
+    # Add IP addresses for Docker
+    INTERNAL_IPS.extend([ip[:-1] + "1" for ip in ips])
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 
@@ -51,6 +59,7 @@ INSTALLED_APPS = [
     "admin_honeypot",
     "allauth",
     "allauth.account",
+    "debug_toolbar",
     "django_htmx",
     "template_partials",
     # local apps
@@ -62,6 +71,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
