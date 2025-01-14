@@ -20,4 +20,43 @@
     <span>HTMX and django-partials is working!</span>
   </div>
   {% endpartialdef %}
+
+  {% if user.is_authenticated %}
+  <!-- Image Upload Section -->
+  <div class="mb-8">
+    <h2 class="text-xl mb-4">Test Image Upload</h2>
+    <form hx-post="{% url 'test-image-hx' %}"
+          hx-target="#image-list"
+          hx-swap="outerHTML"
+          enctype="multipart/form-data"
+          class="flex gap-4 items-end">
+      {% csrf_token %}
+      <input type="file"
+             name="image"
+             accept="image/*"
+             class="file-input file-input-bordered w-full max-w-xs" />
+      <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+  </div>
+
+  <!-- Image List -->
+  {% partialdef image-list inline=True %}
+  <div id="image-list" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    {% for image in images %}
+      <div class="card bg-base-200">
+        <figure class="px-4 pt-4">
+          <img src="{{ image.image.url }}"
+               alt="Uploaded at {{ image.uploaded_at|date:'Y-m-d H:i' }}"
+               class="rounded-xl" />
+        </figure>
+        <div class="card-body">
+          <p class="text-sm opacity-70">{{ image.uploaded_at|date:'Y-m-d H:i' }}</p>
+        </div>
+      </div>
+    {% empty %}
+      <p class="col-span-full text-center opacity-70">No images uploaded yet.</p>
+    {% endfor %}
+  </div>
+  {% endpartialdef %}
+  {% endif %}
 {% endblock content %}
