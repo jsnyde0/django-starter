@@ -8,7 +8,7 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE_URL=postgres://postgresjonatan:postgrespassword@db:5432/postgresproart?connect_timeout=5
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?connect_timeout=5
     ports:
       - "8000:8000"
     volumes:
@@ -22,19 +22,19 @@ services:
   db:
     image: postgres
     container_name: db-container
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgresjonatan -d postgresproart"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
     environment:
-      - POSTGRES_DB=postgresproart
-      - POSTGRES_USER=postgresjonatan
-      - POSTGRES_PASSWORD=postgrespassword
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:
