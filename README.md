@@ -1,130 +1,132 @@
-# django-starter
-Django with preferred packages like htmx, alpine, tailwind, whitenoise, postgres, docker,...
+# Django Starter
 
-## Development Setup
+A starter project for Django with Docker, PostgreSQL, HTMX, and more.
 
-1. Generate secret key:
-```bash
-uv run python -c 'import secrets; print(secrets.token_urlsafe(32))'
-```
+## Quick Start
 
-2. Set up `.env` file with your credentials (see `.env.example` for reference)
+### Prerequisites
 
+- Docker, Docker Compose, and `uv` installed on your machine.
+- A `.env` file with necessary environment variables (see `.env.example` for reference).
 
-3. Install pre-commit and run on all files:
-```bash
-uv run pre-commit install
-uv run pre-commit run --all-files
-```
+### Setup and Run
 
-4. Install frontend dependencies (tailwind, daisyui, flowbite):
-```bash
-cd node
-npm install
-```
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/django-starter.git
+   cd django-starter
+   ```
 
+2. **Install pre-commit hooks**:
+   ```bash
+   uv run pre-commit install
+   ```
 
-## Running with Docker (Recommended)
-Start the development environment with hot-reloading:
-```bash
-docker compose up
-```
+3. **Start the Docker environment**:
+   ```bash
+   docker compose up -d
+   ```
 
-Your app will be available at http://localhost:8000
+   This will automatically apply migrations, create a superuser (if credentials are provided in the `.env` file), and collect static files.
 
-The development setup includes:
-- Hot-reloading for Python code changes
-- PostgreSQL database
-- Automatic database migrations
-- Superuser creation (if specified in .env)
+4. **Access the application**:
+   - Visit [http://localhost:8000](http://localhost:8000) in your browser.
 
-Use `docker compose exec app` to run commands in the `app` container
-(which is the container running the django app), e.g.:
-```bash
-docker compose exec app python manage.py makemigrations
-docker compose exec app python manage.py migrate
-docker compose exec app python manage.py createsuperuser
-docker compose exec app python manage.py collectstatic --noinput
-```
+## Development Workflow
 
-## Frontend Development
+### Running Management Commands
 
-Run Tailwind in watch mode (in a separate terminal):
-```bash
-cd node
-npm run build
-```
+While the entrypoint script handles initial setup tasks, you may need to run other management commands during development:
 
-### Using flowbite
-Unfortunately when importing Flowbite, you have to convert the Tailwind classes to DaisyUI classes.
+- **Make Migrations**: After making changes to your models, run:
+  ```bash
+  docker compose exec app python manage.py makemigrations
+  ```
 
-Use this prompt with an AI assistant to convert the classes to DaisyUI:
+- **Apply Migrations**: To apply new migrations:
+  ```bash
+  docker compose exec app python manage.py migrate
+  ```
 
-```
-Please convert this Flowbite component to use DaisyUI classes. Consider:
+- **Create Superuser**: If you need to create a superuser manually:
+  ```bash
+  docker compose exec app python manage.py createsuperuser
+  ```
 
-1. Color Mapping:
-   - Map Flowbite's light/dark theme colors to DaisyUI's base colors
-   - Convert background colors (bg-white, bg-gray-*) to bg-base-*
-   - Convert text colors to text-base-content with appropriate opacity
-   - Ensure proper contrast for the dark theme
+- **Run Tests**:
+  ```bash
+  docker compose exec app python manage.py test
+  ```
 
-2. Component Classes:
-   - Replace Flowbite's utility classes with DaisyUI component classes
-   - Maintain responsive and interactive states
-   - Preserve any data-attributes needed for Flowbite's JavaScript
+- **Collect Static Files**:
+  ```bash
+  docker compose exec app python manage.py collectstatic --noinput
+  ```
 
-3. Structure:
-   - Use DaisyUI's semantic component structure (menu, dropdown, etc.)
-   - Keep accessibility attributes
-   - Maintain responsive breakpoints
+### Frontend Development
 
-Example mapping:
-- bg-white → bg-base-100
-- dark:bg-gray-900 → bg-base-300
-- text-gray-500 → text-base-content/70
-- shadow-lg → shadow-xl
-```
+- **Install frontend dependencies**:
+  ```bash
+  cd node
+  npm install
+  ```
+- **Run Tailwind in watch mode**:
+  ```bash
+  npm run build
+  ```
 
-This will help maintain consistent styling while leveraging both DaisyUI's theming and Flowbite's JavaScript functionality.
+- **Minify CSS and collect static for production**:
+  ```bash
+  npm run minify
+  cd .. && docker compose exec app python manage.py collectstatic --noinput
+  ```
 
-## Quality Checks
+## Detailed Setup
 
-Run tests:
-```bash
-uv run pytest tests
-```
-
-Run code formatting:
-```bash
-uv run ruff check .
-uv run ruff format --check .
-```
-
-## Running Without Docker
+### Running Without Docker
 
 If you prefer to run without Docker, you will need to set up a PostgreSQL database locally and update your `.env` file accordingly. Follow these steps:
 
-1. Set up a PostgreSQL database locally
+1. Set up a PostgreSQL database locally.
 2. Run migrations:
-```bash
-uv run python manage.py migrate
-```
-
+   ```bash
+   uv run python manage.py migrate
+   ```
 3. Create superuser:
-```bash
-uv run python manage.py createsuperuser
-```
-
+   ```bash
+   uv run python manage.py createsuperuser
+   ```
 4. Run development server:
-```bash
-uv run python manage.py runserver
-```
+   ```bash
+   uv run python manage.py runserver
+   ```
 
 ## Email Setup
 
 For email notifications to work, you need to:
-- set up an email account and add the credentials to the `.env` file.
-- set the domain your app is running on in the django admin -> Sites -> Sites -> example.com
+- Set up an email account and add the credentials to the `.env` file.
+- Set the domain your app is running on in the Django admin -> Sites -> Sites -> example.com.
 
 If you want to use Google's SMTP server, you need to create an app password for the account you want to use and add it to the `.env` file.
+
+## Quality Checks
+
+- **Run tests**:
+  ```bash
+  docker compose exec app python manage.py test
+  ```
+- **Run code formatting**:
+  ```bash
+  uv run ruff check .
+  uv run ruff format --check .
+  ```
+
+## Additional Information
+
+- **Using Flowbite**: Convert Tailwind classes to DaisyUI classes for consistent styling.
+- **Environment Variables**: Ensure all necessary environment variables are set in your `.env` file.
+
+## Troubleshooting
+
+- **Database Issues**: Ensure your Docker volumes are set up correctly to persist data.
+- **Docker Logs**: Use `docker compose logs` to view logs and troubleshoot issues.
