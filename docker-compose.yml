@@ -11,10 +11,10 @@ services:
       - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?connect_timeout=1
     ports:
       - "8000:8000"
-    volumes:
-      - .:/app  # Mount entire project directory
-      - /app/.venv  # Exclude virtual environment
-      - /app/node_modules  # Exclude node_modules
+    # volumes:
+    #   - .:/app  # Mount entire project directory
+    #   - /app/.venv  # Exclude virtual environment
+    #   - /app/node_modules  # Exclude node_modules
     command: ["./start.sh"]
     # command: ["sh", "-c", "ls -la /app && cat /app/start.sh && ./start.sh"]
     depends_on:
