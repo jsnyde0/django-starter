@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+import dj_database_url
 from environ import Env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -93,12 +94,12 @@ WSGI_APPLICATION = "a_core.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+DATABASE_URL = env.str(
+    "DATABASE_URL", default="postgres://postgres:postgres@postgres:5432/postgres"
+)
+DATABASES = {"default": dj_database_url.parse(DATABASE_URL)}
+print(f"DATABASE_URL = {DATABASE_URL}")
+print(f"DATABASES = {DATABASES}")
 
 
 # Password validation
@@ -142,18 +143,13 @@ ACCOUNT_UNIQUE_EMAIL = True
 EMAIL_HOST = env("EMAIL_HOST", default="")
 EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
-print("EMAIL_HOST", EMAIL_HOST)
-print("EMAIL_HOST_USER", EMAIL_HOST_USER)
-print("EMAIL_HOST_PASSWORD", EMAIL_HOST_PASSWORD)
 if EMAIL_HOST and EMAIL_HOST_USER and EMAIL_HOST_PASSWORD:
-    print("using smtp")
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
     DEFAULT_FROM_EMAIL = f"Awesome {EMAIL_HOST_USER}"
     ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
 else:
-    print("using console")
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Internationalization

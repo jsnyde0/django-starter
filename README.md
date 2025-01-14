@@ -1,43 +1,49 @@
 # django-starter
 Django with preferred packages like htmx, alpine, tailwind, whitenoise, postgres, docker,...
 
+## Development Setup
 
-Generate secret key:
+1. Generate secret key:
 ```bash
 uv run python -c 'import secrets; print(secrets.token_urlsafe(32))'
 ```
 
-Install pre-commit and run on all files:
+2. Set up `.env` file with your credentials (see `.env.example` for reference)
+
+
+3. Install pre-commit and run on all files:
 ```bash
 uv run pre-commit install
 uv run pre-commit run --all-files
 ```
 
-Run tests:
-```bash
-uv run pytest tests
-```
-
-Run ruff:
-```bash
-uv run ruff check .
-uv run ruff format --check .
-```
-
-install tailwind, daisyui, flowbite:
+4. Install frontend dependencies (tailwind, daisyui, flowbite):
 ```bash
 cd node
-uv run npm install
+npm install
 ```
 
-Run tailwind in watch mode for development:
+
+## Running with Docker (Recommended)
+Start the development environment with hot-reloading:
 ```bash
-uv run npm run build_minified
+docker compose up
 ```
 
-Don't forget to collect static files for deployment:
+Your app will be available at http://localhost:8000
+
+The development setup includes:
+- Hot-reloading for Python code changes
+- PostgreSQL database
+- Automatic database migrations
+- Superuser creation (if specified in .env)
+
+## Frontend Development
+
+Run Tailwind in watch mode (in a separate terminal):
 ```bash
-uv run python manage.py collectstatic
+cd node
+npm run build
 ```
 
 ### Using flowbite
@@ -73,19 +79,43 @@ Example mapping:
 
 This will help maintain consistent styling while leveraging both DaisyUI's theming and Flowbite's JavaScript functionality.
 
-## Running locally
-Set up `.env` file with your secret key, see `.env.example` for reference.
+## Quality Checks
 
-If it's the first time running the project, you need to run the migrations and create a superuser:
+Run tests:
+```bash
+uv run pytest tests
+```
+
+Run code formatting:
+```bash
+uv run ruff check .
+uv run ruff format --check .
+```
+
+## Running Without Docker
+
+If you prefer to run without Docker:
+
+1. Set up a PostgreSQL database locally
+2. Run migrations:
 ```bash
 uv run python manage.py migrate
+```
+
+3. Create superuser:
+```bash
 uv run python manage.py createsuperuser
 ```
 
-Run local development server:
+4. Run development server:
 ```bash
 uv run python manage.py runserver
 ```
 
-For email notifications to work, you need to set up an email account and add the credentials to the `.env` file. Also set the domain your app is running on in the django admin -> Sites -> Sites -> example.com.
+## Email Setup
+
+For email notifications to work, you need to:
+- set up an email account and add the credentials to the `.env` file.
+- set the domain your app is running on in the django admin -> Sites -> Sites -> example.com
+
 If you want to use Google's SMTP server, you need to create an app password for the account you want to use and add it to the `.env` file.
