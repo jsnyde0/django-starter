@@ -17,8 +17,11 @@
         </svg>
         <span>HTMX and django-partials is working!</span>
     </div>
-{% endpartialdef %}
-{% if user.is_authenticated %}
+    {% endpartialdef %}
+    <c-card title="Trees" url="home">
+        We have the best trees
+    </c-card>
+    {% if user.is_authenticated %}
     <!-- Image Upload Section -->
     <div class="mb-8">
         <h2 class="text-xl mb-4">Test Image Upload</h2>
@@ -55,6 +58,6 @@
             <p class="col-span-full text-center opacity-70">No images uploaded yet.</p>
         {% endfor %}
     </div>
-{% endpartialdef %}
-{% endif %}
+    {% endpartialdef %}
+    {% endif %}
 {% endblock content %}
