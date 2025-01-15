@@ -2,6 +2,8 @@
 {% load partials %}
 {% block content %}
     <h1 class="mb-6 text-3xl">Django Starter Template</h1>
+    <div>
+        <h2 class="text-xl mb-4">Test HTMX and django-partials</h2>
     <p>This is a starter template for Django projects with Tailwind CSS, HTMX, Docker, and more!</p>
     <button class="btn btn-primary max-w-lg"
             hx-get="{% url 'test-partial' %}"
@@ -18,9 +20,31 @@
         <span>HTMX and django-partials is working!</span>
     </div>
     {% endpartialdef %}
-    <c-card title="Trees" url="home">
-        We have the best trees
-    </c-card>
+    </div>
+    <div>
+        <h2 class="text-xl mb-4">Test Cotton</h2>
+        <c-card title="Cotton Card" url="home">
+            If you see a formatted card, then the cotton components are working!
+        </c-card>
+        <c-card title="Skeleton Loader" url="">
+            <a class="btn btn-tertiary"
+            href=""
+            hx-get="{% url 'test-skeleton-hx' %}"
+            hx-target="#test"
+            hx-indicator=".skeleton-wrapper">Load content inside skeleton loader</a>
+            <div id="test" class="bg-base-200 p-4 rounded-lg max-w-lg mt-4">
+                <c-skeleton-wrapper>
+                    <p>This content swap should be animated with skeleton loading.</p>
+                </c-skeleton-wrapper>
+                {% partialdef skeleton-partial %}
+                <c-skeleton-wrapper>
+                    <p>If you saw the skeleton loading animation, then it works!</p>
+                </c-skeleton-wrapper>
+                {% endpartialdef %}
+            </div>
+        </c-card>
+    </div>
+
     {% if user.is_authenticated %}
     <!-- Image Upload Section -->
     <div class="mb-8">
@@ -58,6 +82,6 @@
             <p class="col-span-full text-center opacity-70">No images uploaded yet.</p>
         {% endfor %}
     </div>
-    {% endpartialdef %}
-    {% endif %}
+{% endpartialdef %}
+{% endif %}
 {% endblock content %}
