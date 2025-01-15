@@ -24,7 +24,7 @@ A starter project for Django with Docker, PostgreSQL, HTMX, and more.
 3. **Set up environment variables**:
    Simply copy-paste the `.env.example` and adjust where necessary. For generating a secret key, you can run this:
    ```bash
-   uv run python -c "import secrets; print(''.join(secrets.choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)') for i in range(50)))"
+   uv run python -c "import secrets; print(''.join(secrets.choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_+)') for i in range(50)))"
    ```
    Copy the output and paste it into the `.env` file.
 
