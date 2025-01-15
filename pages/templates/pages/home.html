@@ -45,6 +45,11 @@
     </c-card>
 </div>
 {% if user.is_authenticated %}
+<div>
+    <h2 class="text-xl mb-4">Test Alpine.js</h2>
+    <p>Test this counter alpine component</p>
+    <c-counter/>
+</div>
 <!-- Image Upload Section -->
 <div class="mb-8">
     <h2 class="text-xl mb-4">Test Image Upload</h2>
@@ -61,12 +66,6 @@
         <button type="submit" class="btn btn-primary">Upload</button>
     </form>
 </div>
-<div>
-    <h2 class="text-xl mb-4">Test Alpine.js</h2>
-    <p>Test this counter alpine component</p>
-    <c-counter/>
-</div>
-<!-- Image List -->
 {% partialdef image-list inline=True %}
 <div id="image-list" class="grid grid-cols-2 md:grid-cols-3 gap-4">
     {% for image in images %}
