@@ -10,12 +10,12 @@
         {% if confirmation %}
             {% if can_confirm %}
                 <h1 class="text-3xl font-bold self-center">Confirm Email Address</h1>
-
                 <span class="self-center">
                     Please confirm that {{ confirmation.email_address.email }} is your valid email address.
                 </span>
-
-                <form method="post" action="{% url 'account_confirm_email' confirmation.key %}" class="flex flex-col gap-4">
+                <form method="post"
+                      action="{% url 'account_confirm_email' confirmation.key %}"
+                      class="flex flex-col gap-4">
                     {% csrf_token %}
                     {{ redirect_field }}
                     <button class="btn btn-primary" type="submit">Confirm Email</button>
