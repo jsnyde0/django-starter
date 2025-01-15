@@ -2,7 +2,7 @@
 {% block layout %}
     <div class="antialiased bg-100">
         <!-- Navbar -->
-        {% include "components/navbar.html" %}
+        <c-navbar></c-navbar>
         <!-- Sidebar -->
         {% comment %} {% include "components/sidebar.html" %} {% endcomment %}
         <main class="p-4 h-auto pt-20 flex items-center justify-center">
@@ -11,8 +11,9 @@
         </main>
     </div>
 {% endblock layout %}
-
 {% block extra_js %}
-    {% block component_js %}{% endblock component_js %}
-    {% block page_js %}{% endblock page_js %}
+    {% block component_js %}
+    {% endblock component_js %}
+    {% block page_js %}
+    {% endblock page_js %}
 {% endblock extra_js %}

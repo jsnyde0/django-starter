@@ -1,3 +1,5 @@
+import time
+
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
@@ -36,3 +38,9 @@ def test_image_hx(request):
     # Return the latest 3 images
     images = TestImage.objects.filter(user=request.user)[:3]
     return render(request, "pages/home.html#image-list", {"images": images})
+
+
+def test_skeleton_hx(request):
+    # sleep 1s then return a simple partial to insert in the skeleton loader
+    time.sleep(1)
+    return render(request, "pages/home.html#skeleton-partial")

@@ -62,8 +62,9 @@ INSTALLED_APPS = [
     # "cloudinary_storage", # added conditionally
     # "cloudinary", # added conditionally
     "debug_toolbar",
+    "django_cotton.apps.SimpleAppConfig",
     "django_htmx",
-    "template_partials",
+    "template_partials.apps.SimpleAppConfig",
     # local apps
     "pages",
 ]
@@ -87,8 +88,9 @@ ROOT_URLCONF = "a_core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "NAME": "myname",  # need to assign name to pass to wrap_loaders
         "DIRS": [BASE_DIR / "templates"],
-        "APP_DIRS": True,
+        # "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -96,9 +98,30 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
+            "loaders": [
+                (
+                    "template_partials.loader.Loader",
+                    [
+                        (
+                            "django.template.loaders.cached.Loader",
+                            [
+                                "django_cotton.cotton_loader.Loader",
+                                "django.template.loaders.filesystem.Loader",
+                                "django.template.loaders.app_directories.Loader",
+                            ],
+                        )
+                    ],
+                )
+            ],
+            "builtins": [
+                "django_cotton.templatetags.cotton",
+                "template_partials.templatetags.partials",
+            ],
         },
     },
 ]
+
+# wrap_loaders("myname")
 
 WSGI_APPLICATION = "a_core.wsgi.application"
 
