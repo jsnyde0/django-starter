@@ -69,6 +69,17 @@ While the entrypoint script handles initial setup tasks, you may need to run oth
   docker compose exec app python manage.py collectstatic --noinput
   ```
 
+  Note that you could alias `docker compose exec app python manage.py` to `dmanage` by adding this to your Powershell profile (`code $PROFILE`):
+  ```powershell
+  function dmanage {
+      param(
+          [Parameter(ValueFromRemainingArguments=$true)]
+          [string[]]$args
+      )
+      docker compose exec app python manage.py $args
+  }
+  ```
+
 ### Frontend Development
 
 - **Install frontend dependencies**:
