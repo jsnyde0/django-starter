@@ -8,12 +8,12 @@ services:
       - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?connect_timeout=1
     ports:
       - "8000:8000"
+      - "5678:5678"  # Debugger port
     volumes:
       - .:/app  # Mount entire project directory
       - /app/.venv  # Exclude virtual environment
       - /app/node_modules  # Exclude node_modules
-    command: ["./start.sh"]
-    # command: ["sh", "-c", "ls -la /app && cat /app/start.sh && ./start.sh"]
+    command: ["sh", "-c", "uv run python -m debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000"]
     depends_on:
       db:
         condition: service_healthy
@@ -59,6 +59,7 @@ services:
     ports:
       - 6900:6900
     depends_on:
+      - app
       - redis
       - db
 

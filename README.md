@@ -98,6 +98,23 @@ While the entrypoint script handles initial setup tasks, you may need to run oth
   cd .. && docker compose exec app python manage.py collectstatic --noinput
   ```
 
+### Debugging
+
+To debug the application with VSCode using Docker Compose:
+
+1. **Start Services in Debug Mode**:
+   ```bash
+   docker compose -f docker-compose.yml -f docker-compose.debug.yml up --build
+   ```
+
+2. **Attach Debuggers in VSCode**:
+   - **Django App**: Select 'Attach to App' and press `F5`.
+   - **Celery Worker**: Select 'Attach to Celery' and press `F5`.
+
+> **Note**: Both services will wait for the debugger to attach before starting.
+
+This setup allows you to debug both the Django application and the Celery worker effectively.
+
 ## Detailed Setup
 
 ### Running Without Docker

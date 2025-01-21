@@ -20,6 +20,16 @@
         <span>HTMX and django-partials is working!</span>
     </div>
 {% endpartialdef %}
+    <!-- Background Task -->
+    <h2 class="text-xl mb-4">Test Background Task</h2>
+    <p>Test this celery background task</p>
+    <button class="btn btn-primary"
+            hx-get="{% url 'test-background-task' %}"
+            hx-target="this"
+            hx-swap="outerHTML">Click me to test background task</button>
+    {% partialdef background-task-partial %}
+    <p>Background task started (check console and redis db).</p>
+    {% endpartialdef %}
 </div>
 <div>
     <h2 class="text-xl mb-4">Test Cotton</h2>

@@ -5,6 +5,7 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import render
 
 from .models import TestImage
+from .tasks import simple_print_task
 
 
 def home_view(request):
@@ -44,3 +45,8 @@ def test_skeleton_hx(request):
     # sleep 1s then return a simple partial to insert in the skeleton loader
     time.sleep(1)
     return render(request, "pages/home.html#skeleton-partial")
+
+
+def test_background_task(request):
+    simple_print_task.delay()
+    return render(request, "pages/home.html#background-task-partial")
