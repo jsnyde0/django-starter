@@ -4,6 +4,7 @@ services:
       - DEBUG=True
       - ALLOWED_HOSTS=localhost 127.0.0.1 testserver
       - CSRF_TRUSTED_ORIGINS=http://localhost http://127.0.0.1
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres?connect_timeout=1
     # Override env_file from base compose
     env_file: []
 
