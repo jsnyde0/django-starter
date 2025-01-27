@@ -61,7 +61,7 @@ While the entrypoint script handles initial setup tasks, you may need to run oth
 
 - **Run Tests**:
   ```bash
-  docker compose exec app python manage.py test
+  docker compose exec app pytest
   ```
 
 - **Collect Static Files**:
@@ -147,7 +147,7 @@ If you want to use Google's SMTP server, you need to create an app password for 
 
 - **Run tests**:
   ```bash
-  docker compose exec app python manage.py test
+  docker compose exec app pytest
   ```
 - **Run code formatting**:
   ```bash
