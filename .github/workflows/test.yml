@@ -37,7 +37,7 @@ jobs:
         run: sudo apt-get -y install docker-compose
 
       - name: Build and start containers
-        run: docker compose up -d
+        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml up -d
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
