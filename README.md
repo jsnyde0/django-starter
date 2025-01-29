@@ -30,7 +30,7 @@ A starter project for Django with Docker, PostgreSQL, HTMX, and more.
 
 4. **Start the Docker environment**:
    ```bash
-   docker compose up -d
+   docker compose -f docker-compose.yml -f docker-compose.local.yml up
    ```
 
    This will automatically apply migrations, create a superuser (if credentials are provided in the `.env` file), and collect static files.
