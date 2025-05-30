@@ -28,14 +28,21 @@ A starter project for Django with Docker, PostgreSQL, HTMX, and more.
    ```
    Copy the output and paste it into the `.env` file.
 
-4. **Start the Docker environment**:
+4. **Make startup scripts executable**:
+   In local development, these files are mounted so you need to make these executable. Not needed for production.
    ```bash
-   docker compose up -d
+   chmod +x start.sh
+   chmod +x entrypoint.sh
+   ```
+
+5. **Start the Docker environment**:
+   ```bash
+   docker compose -f docker-compose.yml -f docker-compose.local.yml up --build
    ```
 
    This will automatically apply migrations, create a superuser (if credentials are provided in the `.env` file), and collect static files.
 
-4. **Access the application**:
+6. **Access the application**:
    - Visit [http://localhost:8000](http://localhost:8000) in your browser.
 
 ## Development Workflow
